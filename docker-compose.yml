@@ -1,0 +1,27 @@
+version: '3'
+services:
+    codesnippets:
+        restart: always
+        build: .
+        image: code_snippets
+        volumes:
+            - ./container/:/usr/src/site
+        expose:
+            - "3031"
+
+        networks:
+            - websiteNetwork
+
+    rabbitmq:
+        restart: always
+        image: rabbitmq
+        ports:
+          - "5672:5672"
+
+        networks:
+            - websiteNetwork
+
+
+networks:
+    websiteNetwork:
+        driver: "bridge"

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block head %}
+<meta name="description" content="Template" />
+{{ super() }}
+{% endblock %}
+<!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+{% block content %}
+
+<div class="main-container d-flex justify-content-center align-items-center">
+    {% if not answer_items %}
+    <div class="askForm w-100">
+	<h1>CodeSnippets</h1>
+	<form action="{{ url_for('main.getQuestions')}}">
+	    <div class="input-group mb-3">
+		<input type="text" class="form-control" name='search_query' placeholder="">
+	    </div>
+	</form>
+    </div>
+    {% else %}
+    <div class="header_title">
+	<h1>{{ title|safe }}</h1>
+    </div>
+    {% endif %}
+    <div class="results d-flex">
+	{% if answer_items %}
+	{% for item in answer_items %}
+	<div class="answer {% if item.is_accepted == 1 %}answered{% endif %} result w-100">
+	    <div class="_header d-flex">
+		<div class="votes">
+		    <p>{{ item.score }}</p>
+		</div>
+		{% if item.is_accepted == 1 %}
+		<div class="accepted">
+		    <p>Answered</p>
+		</div>
+		{% endif %}
+	    </div>
+	    <div class="answer_code">
+		{% for a in item.body %}
+		{% if a|length > 10 %}
+		<pre><code>{{ a|safe}}</code></pre>
+		{% endif %}
+		{% endfor %}
+	    </div>
+	    <div class="_footer d-flex">
+		<div class="author">
+		    <p>Author: </p>
+		    <a href='#'>{{ item.owner.display_name }}</a>
+		</div>
+		<div class="source">
+		    <p>Source: </p>
+		    <a href='{{ item.url }}'>{{ item.source }}</a>
+		</div>
+	    </div>
+	</div>
+	{% endfor %}
+	{% endif %}
+    </div>
+</div> <!-- #main-container -->
+
+{% endblock %}
