@@ -61,7 +61,7 @@ Media Queries
 }
 
 @media only screen and (max-width: $break-lg) {
-.questions_results {
+.questions_results, .results {
     width: 100%;
 }
     .mobile-menu {

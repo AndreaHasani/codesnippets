@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 from app.config import Configuration
 from flask_login import LoginManager
-from app.functions import init_celery
+from app.functions import init_celery, Search
 from celery import Celery
 from flask_migrate import Migrate
+# from flask_msearch import Search
 
 from multiprocessing import Process
 import atexit
@@ -13,6 +14,7 @@ global_process = ""
 
 celery_app = Celery('app', config_source='app.celery_config')
 migrate = Migrate()
+search = Search()
 
 
 def startCeleryWorker(application):
@@ -44,6 +46,10 @@ def create_app():
 
     ## Init Migrate
     migrate.init_app(application, db, compare_type=True)
+
+    ## Init search
+    search.db = db
+    search.init_app(app=application)
 
     #Start celery worker on a new Proccess
     global global_process

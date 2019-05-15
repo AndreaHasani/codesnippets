@@ -70,7 +70,7 @@ function appendingQuestions(questions) {
 		<p>${question.votes}</p>
 	    </div>
 	    <div class="title">
-		<a href='/${question.question_id}/${encodeURIComponent(question.title)}' target='_blank'>${question.title}</a>
+		<a href='/${question.id}/${encodeURIComponent(question.title)}' target='_blank'>${question.title}</a>
 	    </div>
 	    `;
 

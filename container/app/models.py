@@ -19,11 +19,12 @@ class Answers(db.Model):
     source = db.Column('source', db.String(128), nullable=False)
     author = db.Column('author', db.String(128), nullable=False)
     url = db.Column('url', db.String(256), nullable=True)
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
 
 
 class Questions(db.Model):
     __tablename__ = 'questions'
+    __searchable__ = ['title', 'tags']
 
     id = db.Column('id', db.Integer(), primary_key=True, nullable=False)
     title = db.Column('title', db.String(128), nullable=False)
